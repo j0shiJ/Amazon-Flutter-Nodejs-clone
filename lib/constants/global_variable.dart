@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+String uri = '192.168.0.100';
+
 class GlobalVariables {
   static const appBarGradient = LinearGradient(
     colors: [
