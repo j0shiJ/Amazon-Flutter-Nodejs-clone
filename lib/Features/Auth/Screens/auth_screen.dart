@@ -1,3 +1,4 @@
+import 'package:amazon_clone/Features/Auth/Services/auth_services.dart';
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
@@ -18,9 +19,14 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  Auth _auth = Auth.signup;
+  final _signUpFormKey = GlobalKey<FormState>();
+  final _signInFormKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
@@ -29,10 +35,32 @@ class _AuthScreenState extends State<AuthScreen> {
     _passwordController.dispose();
   }
 
-  Auth _auth = Auth.signup;
-  final _signUpFormKey = GlobalKey<FormState>();
-  final _signinFormKey = GlobalKey<FormState>();
-  @override
+  // void signInUser() {
+  //   authService.signInUser(
+  //     email: _emailController.text,
+  //     password: _passwordController.text,
+  //     name: _nameController.text,
+  //     context: context,
+  //   );
+  // }
+
+  void signUpUser() {
+    authService.signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+      context: context,
+    );
+  }
+
+  void signInUser() {
+    authService.signInUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      context: context,
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalVariables.greyBackgroundCOlor,
@@ -96,7 +124,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       CustomButton(
                         text: 'Signup',
-                        onTap: () {},
+                        onTap: () {
+                          if (_signUpFormKey.currentState!.validate()) {
+                            signUpUser();
+                          }
+                        },
                       )
                     ],
                   ),
@@ -124,7 +156,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: EdgeInsets.all(8),
                 color: GlobalVariables.backgroundColor,
                 child: Form(
-                  key: _signUpFormKey,
+                  key: _signInFormKey,
                   child: Column(
                     children: [
                       CustomTextField(
@@ -143,7 +175,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       CustomButton(
                         text: 'Login',
-                        onTap: () {},
+                        onTap: () {
+                          if (_signInFormKey.currentState!.validate()) {
+                            signInUser();
+                          }
+                        },
                       )
                     ],
                   ),
