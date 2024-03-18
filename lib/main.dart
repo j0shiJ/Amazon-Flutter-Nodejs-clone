@@ -11,7 +11,7 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
-    )
+    ),
   ], child: const MyApp()));
 }
 
@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Amazon Clone',
